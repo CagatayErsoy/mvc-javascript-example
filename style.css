@@ -1,0 +1,26 @@
+:root{
+    --main-section-background-color:rgb(21, 21, 153);
+    --default-font-size:2rem;
+}
+
+ol, ul{
+    background-color:var(--main-section-background-color);
+    margin: 2rem;
+    padding: var(--default-font-size);
+    
+}
+li{
+    font-size:var(--default-font-size);
+    margin:calc(var(--default-font-size)/2);
+    color: aliceblue;
+    
+}
+button{
+    
+    
+}
+button::after{
+    
+   content: "x";
+   font-size:calc(var(--default-font-size))
+}
