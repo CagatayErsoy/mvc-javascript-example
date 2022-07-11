@@ -1,7 +1,7 @@
 const Api = (() => {
     const baseUrl = "http://localhost:3000/profile"
     
-    let abortController = new AbortController()
+   
 
     const getUsers = () =>
         fetch(baseUrl).then(users => users.json())
@@ -14,13 +14,10 @@ const Api = (() => {
         fetch((baseUrl),{
             method: "POST",
             body: JSON.stringify(user),
-            signal : abortController.signal,
             header:{
                 'Content-type': 'application/json; charset=UTF-8',
             }
-        }).then((response) => {
-            console.log(response)
-            return response.json()})
+        }).then((response) => response.json())
     return {
         getUsers,
         deleteUser,
@@ -29,7 +26,7 @@ const Api = (() => {
   
 
 })();
-window.onbeforeunload = function(e) { abortController.abort(); }
+
 
 //===================View======================================= 
 const View = (() => {
@@ -134,7 +131,7 @@ const Controller = ((model,view) => {
    const deleteUser=()=>{
     const userContainer=document.querySelector(view.domstr.container1)
     userContainer.addEventListener('click',(event)=>{
-        console.log(document.getElementById(view.domstr.form))
+        
         if(event.target.className===view.domstr.deleteButton){
             
             state.users=state.allUsers.filter(user=>
@@ -149,22 +146,23 @@ const Controller = ((model,view) => {
 
    const addUser=()=>{
     const form=document.getElementById(view.domstr.form)
+    const submit=document.getElementById(view.domstr.submit)
     const firstName=document.getElementById(view.domstr.firstName)
     const lastName=document.getElementById(view.domstr.lastName)
     const email=document.getElementById(view.domstr.email)
     const phone=document.getElementById(view.domstr.phone)
-    form.addEventListener("submit",(e)=>{
+    submit.addEventListener("click",(e)=>{
         
         e.preventDefault()
-        const newUser=new model.User(firstName.value,lastName.value,email.value,phone.value)
-        
-        model.addUser(newUser).then(user=>{
-        state.users=[user,...state.allUsers]
-       })
-       firstName.value===''
-        lastName.value===''
-       email.value===''
-       phone.value===''
+        const newUser=new model.User(firstName.value, lastName.value ,email.value, phone.value)
+        console.log(newUser)
+         model.addUser(newUser
+         
+         ).then(user=>{
+            console.log("this is user",user)
+         state.users=[user,...state.allUsers]
+     })
+       
        // reset part
        
         
